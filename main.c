@@ -11,11 +11,6 @@
 int port = 0;
 char *path;
 void loadConfig(){
-    // file contains format like this:
-    /*
-        PORT=80
-        PATH=/var/www/html/index.html
-    */
     FILE *fp;   
     char *line = NULL;
     size_t len = 0;
@@ -32,8 +27,8 @@ void loadConfig(){
         }
     }
     fclose(fp);
-    printf("File is loaded!! :)\n");
-    printf("Port: %d\n", port);
+    printf("Configurations loaded successfully! \n");
+    printf("Client running on Port: %d\n", port);
     printf("Path: %s\n", path);
 }
 void setUpServer(char httpHeader[]){
@@ -90,7 +85,7 @@ int main(int argc, char const *argv[]){
     }
     while(1)
     {
-        printf("\n+++++++ Waiting for new connection ++++++++\n\n");
+        printf("\n-------------Waiting for new connection --------------\n\n");
         if ((new_socket = accept(server_fd, (struct sockaddr *)&address, (socklen_t*)&addrlen))<0)
         {
             perror("In accept");
@@ -101,7 +96,7 @@ int main(int argc, char const *argv[]){
         valread = read( new_socket , buffer, 30000);
         printf("%s\n",buffer );
         write(new_socket , httpHeader , strlen(httpHeader));
-        printf("------------------Hello message sent-------------------");
+        printf("------------------Connection Established-------------------");
         close(new_socket);
     }
     return 0;
