@@ -5,174 +5,376 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>HTTP Server</title>
-    <link rel="stylesheet" href="./style.css" />
-    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
-    <link href="https://fonts.googleapis.com/css2?family=Dosis&display=swap" rel="stylesheet">
+    <link
+      rel="stylesheet"
+      href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+      integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p"
+      crossorigin="anonymous"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Dosis&display=swap"
+      rel="stylesheet"
+    />
   </head>
   <body>
+    <style>
+      .container {
+        max-width: 1280px;
+        margin: auto;
+        overflow: hidden;
+        padding: 0 1.5rem;
+      }
+
+      .btn-main,
+      .btn-light,
+      .btn-dark {
+        display: inline-block;
+        padding: 0.8rem 2rem;
+        transition: all 0.5s;
+        border: none;
+        cursor: pointer;
+        border-radius: 2px;
+      }
+
+      .btn-main {
+        color: #333;
+        background-color: #ffbc00;
+      }
+
+      .btn-light {
+        color: #333;
+        background-color: #f4f4f4;
+      }
+
+      .btn-dark {
+        color: #f4f4f4;
+        background-color: #333;
+      }
+
+      button[class^='btn-']:hover,
+      a[class^='btn-']:hover,
+      input[class^='btn-']:hover {
+        background-color: #ffbc00;
+      }
+
+      .bg-main {
+        background: #ffbc00;
+        color: #fff;
+      }
+
+      .bg-dark {
+        background: #333;
+        color: #fff;
+      }
+
+      .bg-light {
+        background: #f4f4f4;
+        color: #000;
+      }
+
+      .bg-medium {
+        background: #ccc;
+        color: #000;
+      }
+
+      .lead {
+        font-size: 1.3rem;
+        margin-bottom: 2rem;
+      }
+
+      .text-center {
+        text-align: center;
+      }
+
+      .py-1 {
+        padding: 1rem 0;
+      }
+
+      .py-2 {
+        padding: 2rem 0;
+      }
+
+      .py-3 {
+        padding: 3rem 0;
+      }
+
+      .py-4 {
+        padding: 4rem 0;
+      }
+
+      .my-1 {
+        margin: 1rem 0;
+      }
+
+      .my-2 {
+        margin: 2rem 0;
+      }
+
+      .my-3 {
+        margin: 3rem 0;
+      }
+
+      .my-4 {
+        margin: 4rem 0;
+      }
+
+      .bottom-line {
+        height: 2px;
+        width: 3rem;
+        background-color: #ffbc00;
+        display: block;
+        margin: 0 auto 1rem auto;
+      }
+
+      .section-title {
+        font-size: 2rem;
+        display: block;
+        padding-bottom: 0.5rem;
+        text-align: center;
+        font-weight: 100;
+        text-transform: uppercase;
+      }
+
+      * {
+        margin: 0%;
+        padding: 0;
+      }
+
+      body {
+        font-family: 'Dosis', sans-serif;
+        line-height: 1.6;
+        background: #fff;
+      }
+
+      a {
+        text-decoration: none;
+        color: #333;
+      }
+
+      ul {
+        list-style: none;
+      }
+
+      h2,
+      h3,
+      h4 {
+        text-transform: uppercase;
+      }
+
+      img {
+        width: 100%;
+      }
+
+      #about-nav {
+        display: flex;
+        justify-content: space-between;
+        padding-top: 1rem;
+      }
+      #about-nav ul {
+        display: flex;
+      }
+      #about-nav li {
+        padding: 1rem 1.5rem;
+      }
+      #about-nav a {
+        text-decoration: none;
+        color: white;
+        text-transform: uppercase;
+        border-bottom: 3px transparent solid;
+        padding-bottom: 0.5rem;
+        transition: border-color 0.5s;
+      }
+      #about-nav a:hover {
+        border-color: #ccc;
+      }
+      #about-nav a.current {
+        border-color: #ffbc00;
+      }
+      #about-a .about-info {
+        display: grid;
+        grid-template-areas:
+          'bioimage bio bio'
+          'aw1 aw2 aw3';
+        grid-gap: 1.2rem;
+      }
+
+      #about-a .bio-image {
+        grid-area: bioimage;
+      }
+
+      #about-a .bio {
+        grid-area: bio;
+        border-left: 3px solid #ffbc00;
+        padding: 0.8rem;
+      }
+      #about-a .bio p {
+        padding: 50px;
+      }
+      #about-a .award-1 {
+        grid-area: aw1;
+      }
+
+      #about-a .award-2 {
+        grid-area: aw2;
+      }
+
+      #about-a .award-3 {
+        grid-area: aw3;
+      }
+
+      #about-a .award-1 .fas,
+      #about-a .award-2 .fas,
+      #about-a .award-3 .fas {
+        color: #ffbc00;
+        margin: 1rem;
+      }
+
+      #about-b .progress {
+        overflow: hidden;
+        height: 20px;
+        background: #ccc;
+        border-radius: 5px;
+        margin-bottom: 0.6rem;
+      }
+      #about-b .progress div {
+        height: 100%;
+        color: #fff;
+        text-align: center;
+        background-color: #ffbc00;
+      }
+      #main-footer {
+        background-color: #333;
+        color: #fff;
+        height: 5rem;
+      }
+      #main-footer .footer-content {
+        display: flex;
+        justify-content: center;
+        height: 5rem;
+        align-items: center;
+      }
+      #main-footer .footer-content .social a {
+        text-decoration: none;
+        color: #fff;
+      }
+      #main-footer .footer-content .social .fab {
+        margin-right: 1rem;
+        border: 2px #fff solid;
+        border-radius: 50%;
+        height: 20px;
+        width: 20px;
+        line-height: 20px;
+        text-align: center;
+        padding: 0.5rem;
+      }
+      #main-footer .footer-content .social .fab:hover {
+        background: #ffbc00;
+      }
+      @media (max-width: 500px) {
+        #about-nav {
+          flex-direction: column;
+          align-items: center;
+        }
+        #about-nav li {
+          padding: 1rem;
+        }
+        #header-inner {
+          height: 10rem;
+        }
+        #about-a .about-info {
+          grid-template-areas:
+            'bioimage'
+            'bio'
+            'aw1'
+            'aw2'
+            'aw3';
+        }
+        #main-footer {
+          height: 7rem;
+        }
+        #main-footer .footer-content {
+          flex-direction: column;
+          padding: 1rem;
+          height: 5rem;
+        }
+      }
+    </style>
     <!-- Header -->
-    <header id="header-home">
-        
-            <nav id="main-nav">
-                <h1 id="logo">My Portfolio</h1>
-                <ul>
-                    <li><a href="index.html" class="current">Home</a></li>
-                    <li><a href="about.html">About</a></li>
-                    <li><a href="#contact-a">Contact</a></li>
-                </ul>
-            </nav>
-            <div class="container"></div>
-                <div class="header-content">
-                    <h1>I Am Ayush Agarwal - Full Stack Web Developer</h1>
-                    <p class="lead">I specialize in Frontend Web Development and Competitive Programming.</p>
-                    <a href="about.html" class="btn-light">About Me</a>
-                </div>
-        </div>
-    </header> 
-    <!-- Section a:specialiaze -->
-    <section id="home-a" class="text-center py-2">
-        <div class="conatiner">
-            <h2 class="section-title">I Specialize In</h2>
-            <div class="bottom-line"></div>
-            <div class="specials">
-                <div>
-                    <i class="fab fa-html5 fa-2x"></i>
-                        <h3>Web Development</h3> 
-                        <p>I have learnt HTML, CSS, SASS & Javascript and I have built a few projects using them. I also won the 1st prize in a Web Dev inter-college event, Codigo.</p>
-                    
-                </div>
-                <div>
-                    <i class="fas fa-laptop fa-2x"></i>
-                        <h3>Competitive Programming</h3> 
-                        <p>I code in Java language. I am 5 star coder at HackerRank and currently I have shifted to CodeChef, taking part in its Long Challenges.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- section b:stats -->
-    <section id="home-b" class="text-center py-2">
-        <div class="stats">
-        <div>
-            <ul>
-                <li><i class="fas fa-school fa-3x"></i></li>
-                <li class="stats-title">ICSE Percentage</li>
-                <li class="stats-number">95.8%</li>
-            </ul>
-        </div>
-        <div>
-            <ul>
-                <li><i class="fas fa-graduation-cap fa-3x"></i></li>
-                <li class="stats-title">ISC Percentage</li>
-                <li class="stats-number">97.3%</li>
-            </ul>
-        </div>
-        <div>
-            <ul>
-                <li><i class="fas fa-calendar-week fa-3x"></i></li>
-                <li class="stats-title">Hackathons</li>
-                <li class="stats-number">3</li>
-            </ul>
-        </div>
-        <div>
-            <ul>
-                <li><i class="fas fa-code-branch fa-3x"></i></li>
-                <li class="stats-title">Projects Completed</li>
-                <li class="stats-number">5</li>
-            </ul>
-        </div>
-    </div>
-    </section>
-    <!-- section c:process -->
-    <section id="home-c" class="text-center py-2">
-        <div class="container">
-            <h2 class="section-title">
-               Hackathons
-            </h2>
-            <div class="bottom-line"></div>
-            <p class="lead">
-                Hackathons I participated in, building projects in 3-4 days.. 
+    <header id="header-inner">
+      <div class="container">
+        <nav id="about-nav">
+          <h1 id="logo">My Portfolio</h1>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html" class="current">About</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+    <!-- section a:info -->
+    <section id="about-a" class="text-center py-3">
+      <div class="container">
+        <h2 class="section-title">About Me</h2>
+        <div class="bottom-line"></div>
+        <p class="lead">
+          Let me tell you a little about myself and what I do...
+        </p>
+        <div class="about-info">
+          <img src="img/about.jpg" alt="" class="bio-image" />
+          <div class="bio bg-light">
+            <h4>Here's what you should know about me</h4>
+            <p>
+              I am a First year student at Thapar Institute of Engineering and
+              Technology, Patiala, pursuing my B.E. degree in Computer
+              Engineering. I have interests in Web Development and Competitive
+              Programming and I am looking forward to build and code more. I
+              live in Jamshedpur, Jharkhand. I completed my schooling till Class
+              XII from D.B.M.S. English School. I was affiliated to ICSE/ISC
+              Board.
             </p>
-            <div class="process">
-                <div>
-                    <i class="fas fa-laptop-code fa-3x process-icon my-2">
-                        <div class="process-step">1</div>
-                    </i>
-                    <h3>OctaHacks 3.0</h3>
-                    <p>First Hackathon which I participated in. My team was placed in top 20 in this national level hackathon organised by DSC, CIET.</p>
-                </div>
-                <div>
-                    <i class="fas fa-laptop-code fa-3x process-icon my-2">
-                        <div class="process-step">2</div>
-                    </i>    
-                    <h3>Hacklipse</h3>
-                    <p>Participated in Hacklipse, an intra-college hackathon organised by ACM Thapar, TIET.</p>
-                </div>
-                <div>
-                    <i class="fas fa-laptop-code fa-3x process-icon my-2">
-                        <div class="process-step">3</div>
-                    </i>
-                    <div class="clr"></div>
-                    <h3>Cisco Webex Virtual Hackathon</h3>
-                    <p>Participated in the national hackathon organised by CISCO.</p>
-                </div>
-
-            </div>
+          </div>
         </div>
+      </div>
     </section>
-    <!-- section a:contact form -->
-    <section id="contact-a" class="py-3 text-center">
-        <div class="container">
-            <h2 class="section-title">Contact Me</h2>
-            <div class="bottom-line"></div>
-            <p class="lead">Here is how you can reach me!</p>
-            <form>
-                <div class="text-fields">
-                    <input type="text" class="text-input name-input" placeholder="Name"
-                    name="name">
-                    <input type="text" class="text-input subject-input" placeholder="Subject"
-                    name="subject">
-                    <input type="email" class="text-input email-input" placeholder="Email Address"
-                    name="email">
-                    <input type="text" class="text-input phone-input" placeholder="Phone Number"
-                    name="phone">
-                    <textarea class="text-input message-input" placeholder="Enter Your Message"
-                    name="message"></textarea>
-                </div>
-                <button class="btn-main" type="submit">Submit</button>
-            </form>
+    <!-- section b:progress bar -->
+    <section id="about-b" class="bg-dark py-3">
+      <div class="container">
+        <h2 class="section-title">Tech Stack</h2>
+        <div class="bottom-line"></div>
+        <h4>HTML & CSS:</h4>
+        <div class="progress">
+          <div style="width: 90%"></div>
         </div>
-    </section>
-
-    <!-- section b:contact info -->
-    <section id="contact-b" class="py-3 bg-dark">
-        <div class="container">
-            <div class="contact-info">
-                <div>
-                    <i class="fas fa-envelope fa-2x"></i>
-                    <h3>Email</h3>
-                    <p>agarwal.ayush.0109@gmail.com</p>
-                </div>
-                <div>
-                    <i class="fas fa-phone fa-2x"></i>
-                    <h3>Phone</h3>
-                    <p>+91-90066-90899</p>
-                </div>
-                <div>
-                    <i class="fas fa-address-card fa-2x"></i>
-                    <h3>Address</h3>
-                    <p>Jamshedpur, Jharkhand, India</p>
-                </div>
-            </div>
+        <h4>SASS:</h4>
+        <div class="progress">
+          <div style="width: 70%"></div>
         </div>
+        <h4>JavaScript:</h4>
+        <div class="progress">
+          <div style="width: 50%"></div>
+        </div>
+        <h4>Java:</h4>
+        <div class="progress">
+          <div style="width: 80%"></div>
+        </div>
+        <h4>C++:</h4>
+        <div class="progress">
+          <div style="width: 60%"></div>
+        </div>
+      </div>
     </section>
     <!-- footer -->
     <footer id="main-footer">
-        <div class="footer-content container">
-           
-            <div class="social">
-                <a href="https://github.com/AyushAgarwal0109" target="_blank"><i class="fab fa-github"></i></a>
-                <a href="https://www.linkedin.com/in/ayush-ag01/" target="_blank"><i class="fab fa-linkedin"></i></a>
-            </div>
+      <div class="footer-content container">
+        <div class="social">
+          <a href="https://github.com/AyushAgarwal0109" target="_blank"
+            ><i class="fab fa-github"></i
+          ></a>
+          <a href="https://www.linkedin.com/in/ayush-ag01/" target="_blank"
+            ><i class="fab fa-linkedin"></i
+          ></a>
         </div>
+      </div>
     </footer>
+  </body>
 </html>
